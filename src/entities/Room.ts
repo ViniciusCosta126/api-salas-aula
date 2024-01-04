@@ -1,13 +1,27 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { Video } from "./Video";
+import { Subject } from "./Subject";
 
-@Entity('rooms')
+@Entity("rooms")
 export class Room {
-    @PrimaryGeneratedColumn()
-    id: number
-    @Column({ type: "text" })
-    name: string
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @OneToMany(() => Video, video => video.room)
-    videos: Video[]
+  @Column({ type: "text" })
+  name: string;
+
+  @Column({ type: "text" })
+  description: string;
+
+  @OneToMany(() => Video, (video) => video.room)
+  videos: Video[];
+
+  @ManyToMany(() => Subject, (subject) => subject.rooms)
+  subjects: Subject[];
 }
